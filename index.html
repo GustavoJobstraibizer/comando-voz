@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<title>Speech Recognition App</title>
+	<style>
+		body {
+			font-size: 40px;
+		}
+
+		.luz-apagada {
+			color: white;
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<p>Este site utiliza comando de voz. É necessário ter um microfone.</p>
+				<p>Clique no botão e Diga "luz" para mudar a cor de fundo.</p>
+			</div>
+		</div>
+
+		<button class="btn btn-primary btn-lg" id="speakBtn">
+			Falar
+		</button>
+
+	</div>
+	<script>
+window.addEventListener('DOMContentLoaded', function() {
+	var speakBtn = document.getElementById('speakBtn');
+
+	if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+		var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+
+		var recognition = new SpeechRecognition();
+
+		speakBtn.addEventListener('click', function () {
+			recognition.start();
+		}, false);
+
+		recognition.addEventListener('result', function(e) {
+			console.log(e);
+			var result = e.results[0][0].transcript;
+			// if (result.toLowerCase() === 'luz') {
+			// 	document.body.classList.toggle('luz-apagada');
+			// }
+			window.location.href = 'http://' + result;
+		}, false);
+	} else {
+		alert('Este navegador não suporta esta funcionalidade.');
+	}
+}, false);
+	</script>
+</body>
+</html>
